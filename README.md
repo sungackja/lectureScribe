@@ -1,163 +1,163 @@
-# LectureScribe
+<p align="center">
+  <img src="assets/lecturescribe-hero.png" alt="LectureScribe — 헤드폰을 쓴 민트색 녹음 도우미와 노트북" width="100%">
+</p>
 
-**강의 영상과 음성을 내 PC에서 녹취하고, 수정한 결과를 문서와 자막으로 저장하는 Windows 프로그램입니다.**
+<h1 align="center">강의는 듣고, 기록은 맡겨요 🎧</h1>
 
-현재 로컬 프로그램 버전: **0.3.0** · 문서 정리일: **2026-10-14**
+<p align="center">
+  강의 영상과 음성을 내 PC에서 녹취하고,<br>
+  나만의 문서와 자막으로 정리하는 작은 공부 도우미.
+</p>
 
-이 저장소는 LectureScribe의 제작 내용과 사용 방법을 소개합니다. 아래 실행 경로와 명령은 프로그램 배포 폴더 또는 개발 소스를 받은 환경을 기준으로 합니다. 현재 이 저장소에는 소개 문서를 게시하며, 실행 파일·모델·강의 원본·녹취 원문은 포함하지 않습니다.
+<p align="center">
+  <strong>🪟 Windows</strong> &nbsp; · &nbsp;
+  <strong>🌿 로컬 전사</strong> &nbsp; · &nbsp;
+  <strong>⚡ NVIDIA GPU</strong> &nbsp; · &nbsp;
+  <strong>📦 v0.3.0</strong>
+</p>
 
-## 어떤 프로그램인가요?
+<p align="center">
+  <a href="#-작은-도우미가-하는-일">기능 둘러보기</a> &nbsp; / &nbsp;
+  <a href="#-세-걸음이면-완성">사용 방법</a> &nbsp; / &nbsp;
+  <a href="#-얼마나-빠를까요">성능 기록</a> &nbsp; / &nbsp;
+  <a href="docs/GUIDE.md">자세한 안내</a>
+</p>
 
-LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성을 텍스트로 바꾸는 데스크톱 앱입니다. 외부 음성 인식 API에 강의를 업로드하지 않고, 사용자의 컴퓨터에서 추론합니다. 녹취를 확인하고 수정한 뒤 공부나 기록에 사용할 수 있습니다.
+---
 
-### 주요 기능
+## 🌱 작은 도우미가 하는 일
 
-| 기능 | 설명 |
-|---|---|
-| 영상·음성 등록 | MP4, MP3, WAV, M4A, MKV 파일 추가 및 끌어놓기 |
-| 여러 파일 처리 | 대기열에 등록하고 순차 전사 |
-| GPU 전사 | Whisper 계열 4종과 Qwen3-ASR-1.7B 지원 |
-| 언어 선택 | 한국어, 영어, 일본어, 자동 감지 |
-| 진행 상태 | 처리 위치, 경과 시간, 속도와 예상 남은 시간 표시 |
-| 녹취 편집 | 문장 검색, 더블클릭 수정, 원본과 수정본 비교 |
-| 자동 저장 | 작업 결과를 TXT, DOCX, JSON으로 저장 |
-| 추가 내보내기 | TXT, DOCX, SRT, VTT, JSON 지원 |
-| 출력 구성 | 전체 텍스트, 타임스탬프 포함, 시간별 노트 |
-| 작업 복구 | 재시작 시 대기열 복원, 중지된 작업의 부분 결과 보존 |
-| 진단 | GPU 준비 상태와 작업별 오류 로그 확인 |
+<table>
+<tr>
+<td width="33%" valign="top">
+<h3>🎬 파일을 툭</h3>
+<p>MP4 · MP3 · WAV · M4A · MKV를 끌어놓아요. 여러 강의도 대기열에서 차례로 처리해요.</p>
+</td>
+<td width="33%" valign="top">
+<h3>🎧 내 PC에서 녹취</h3>
+<p>Whisper와 Qwen 모델이 NVIDIA GPU로 음성을 글로 바꿔요. 강의를 전사 API에 보내지 않아요.</p>
+</td>
+<td width="33%" valign="top">
+<h3>📝 나만의 기록으로</h3>
+<p>문장을 검색하고 수정해요. TXT · Word · 자막으로 저장하고, 원본도 함께 보관해요.</p>
+</td>
+</tr>
+</table>
 
-시간별 노트는 발화를 시간 구간으로 묶는 기능입니다. 내용을 생성하거나 요약하지 않습니다.
+<p align="center"><strong>듣기 → 글로 바꾸기 → 다듬기 → 저장하기</strong></p>
 
-## 사용하는 순서
+## 🍀 세 걸음이면 완성
 
-1. 배포 폴더의 `dist\LectureScribe\LectureScribe.exe` 또는 개발 폴더의 `run.bat`를 실행합니다.
-2. 강의 영상이나 음성 파일을 추가합니다.
-3. 모델과 언어를 선택합니다. 기본 설정은 **Large-v3 Turbo / 한국어 / FP16**입니다.
-4. 모델이 없으면 예상 다운로드 용량과 저장 위치를 확인하고 다운로드에 동의합니다.
-5. **전사 시작**을 누르고 완료된 녹취를 확인합니다.
-6. 문장을 두 번 클릭해 수정합니다. JSON에는 원본 `text`와 수정본 `edited_text`가 구분되어 저장됩니다.
-7. **내보내기**에서 원하는 문서 또는 자막 형식을 선택합니다.
+| 01 · 준비해요 | 02 · 맡겨요 | 03 · 챙겨요 |
+| :--- | :--- | :--- |
+| 앱을 켜고 강의 파일을 추가해요. | 모델과 언어를 고르고 **전사 시작**을 눌러요. | 녹취를 확인하고 수정한 뒤 문서나 자막으로 내보내요. |
 
-EXE 배포본은 `_internal` 폴더를 포함한 전체 폴더를 함께 유지해야 합니다. 모델은 배포 ZIP에 포함하지 않으며 사용자 캐시에 별도로 저장합니다.
+첫 모델 다운로드는 용량과 저장 위치를 확인하고 동의한 뒤 진행해요. 다운로드가 끝난 모델은 로컬에서 재사용해요.
 
-## 지원 모델
+> **처음이라면** Large-v3 Turbo · 한국어 · FP16으로 시작해보세요.
+> 전사가 끝나면 TXT · DOCX · JSON이 자동으로 저장돼요.
 
-| 화면 모델 | 엔진 | 예상 모델 용량 |
-|---|---|---:|
-| Large-v3 Turbo | faster-whisper / CTranslate2 | 약 1.62 GB |
-| Small | faster-whisper / CTranslate2 | 약 0.49 GB |
-| Medium | faster-whisper / CTranslate2 | 약 1.54 GB |
-| Large-v3 | faster-whisper / CTranslate2 | 약 3.1 GB |
-| Qwen3-ASR-1.7B | Qwen-ASR / PyTorch, BF16 | 약 4.7 GB |
+<details>
+<summary><strong>🧺 실행과 설치 안내 펼치기</strong></summary>
 
-용량은 프로그램에 표시하는 추정값이며 실행 환경과 설치 패키지 용량은 별도입니다.
+배포 폴더의 `dist\LectureScribe\LectureScribe.exe` 또는 개발 폴더의 `run.bat`를 실행해요. EXE는 `_internal` 폴더와 함께 유지해주세요.
 
-Whisper 계열에는 beam size, VAD, 전문용어 설정을 적용할 수 있습니다. 기본 beam size는 5입니다. Qwen은 별도 실행 환경을 사용하고 음성을 60초씩 나누어 처리합니다. Qwen의 타임스탬프는 청크 범위이며, Whisper 설정인 beam size·VAD·전문용어는 Qwen에 적용되지 않습니다.
+개발 환경은 Python 3.11 x64에서 `setup.bat`로 설치해요. Qwen은 Python 3.12 또는 uv를 준비하고 `setup_qwen.bat`로 별도 환경을 설치해요.
 
-## 설치와 실행 환경
+현재 저장소는 프로그램 **소개 문서**를 담고 있어요. 실행 파일과 개발 소스는 아직 이 저장소에 게시되어 있지 않아요. 위 경로는 전체 프로그램 폴더가 있는 환경을 기준으로 해요.
 
-실제 검증 환경은 **Windows 11 Pro x64 / Intel Core i5-14400F / RAM 48GB / RTX 5060 Ti 8GB급**입니다. 이는 검증한 PC의 사양이며 최소 요구 사양을 의미하지 않습니다. NVIDIA GPU를 사용하며 CPU 자동 전환은 제공하지 않습니다.
+[설치 · 빌드 · GPU 진단 자세히 보기 →](docs/GUIDE.md#설치와-실행-환경)
 
-개발 소스 또는 전체 배포 파일이 있는 경우 다음 스크립트를 사용합니다.
+</details>
 
-| 목적 | 실행 방법 |
-|---|---|
-| 기본 개발 환경 설치 | Python 3.11 x64 환경에서 `setup.bat` |
-| 앱 실행 | `run.bat` |
-| Qwen 실행 환경 설치 | Python 3.12 또는 uv 준비 후 `setup_qwen.bat` |
-| Windows 실행 파일 빌드 | `build.bat` |
-| 배포 ZIP 생성 | `.venv\Scripts\python.exe tools\package_release.py` |
-| GPU 진단 | `.venv\Scripts\python.exe main.py --diagnose` |
-| 자동 검사 | `.venv\Scripts\python.exe -m unittest discover -s tests -v` |
+## ⚡ 얼마나 빠를까요?
 
-기본 Whisper 환경은 별도의 시스템 CUDA Toolkit, PyTorch 또는 FFmpeg 프로그램 설치 없이 패키지에 포함된 CUDA DLL과 PyAV를 사용합니다. **Qwen을 사용할 때는 PyTorch를 포함한 별도 환경 설치가 필요합니다.**
+<p align="center">
+  <strong>약 29.8분 강의 한 편</strong><br>
+  Large-v3 Turbo의 GPU 전사 시간 <strong>45.7초</strong>
+</p>
 
-## 어떻게 만들었나요?
+| 모델 | GPU 전사 시간 | 처리 방식 |
+| :--- | ---: | :--- |
+| 🌿 Large-v3 Turbo | **45.7초** | FP16 |
+| 📚 Large-v3 | 185.7초 | FP16 |
+| 🎙️ Qwen3-ASR-1.7B | 394.4초 | BF16 · 60초 청크 |
 
-Python으로 화면, GPU 작업, 저장·내보내기 기능을 나누어 구현했습니다.
+RTX 5060 Ti에서 측정한 기존 개발 기록이에요. 다운로드 시간은 제외했으며 Qwen은 모델 로딩을 포함하면 총 412.2초예요. 파일과 환경에 따라 결과는 달라져요.
 
-```text
-강의 파일 추가
-    ↓
-PyAV로 파일 길이와 오디오 정보 확인
-    ↓
-대기열에서 파일을 순차 처리
-    ↓
-별도 GPU 작업 프로세스에서 Whisper 또는 Qwen 실행
-    ↓
-발화별 결과와 진행 상태를 앱 화면으로 전달
-    ↓
-TXT · DOCX · JSON 자동 저장
-    ↓
-사용자가 검색·수정하고 문서·자막으로 내보내기
-```
+<details>
+<summary><strong>🔎 정확도 비교와 검증 범위 읽기</strong></summary>
 
-| 구성 | 역할 |
-|---|---|
-| PySide6 / Qt | 데스크톱 화면, 파일 등록, 대기열, 녹취 편집 |
-| faster-whisper / CTranslate2 | Whisper 모델의 CUDA 추론 |
-| Qwen-ASR / PyTorch | Qwen 모델의 CUDA/BF16 추론 |
-| PyAV | 영상·음성 파일의 미디어 정보와 오디오 처리 |
-| python-docx | Word 문서 생성 |
-| PyInstaller | Windows 폴더형 실행 파일 배포 |
+CLOVA 참고 텍스트와 비교한 CER / WER은 Turbo **6.2% / 14.0%**, Large-v3 **7.2% / 16.9%**, Qwen **5.8% / 15.2%**였어요.
 
-화면과 GPU 작업을 별도 프로세스로 분리해 GPU 오류가 화면까지 종료시키는 것을 줄였습니다. 같은 작업 프로세스에서 모델을 재사용하며, JSON은 임시 파일에 작성한 뒤 교체합니다. 중지 시 저장된 부분 결과를 보존하고, 재시도는 파일 처음부터 새 작업으로 처리합니다.
+CLOVA 텍스트는 정답지가 아니며, 이 값은 텍스트 간 차이예요. 절대 정확도 점수가 아니고 한국어 띄어쓰기와 화자 표기 차이도 영향을 줘요. 중요한 문장은 원음과 대조해주세요.
 
-주요 개발 파일은 `main.py`, `lecturescribe/gui.py`, `worker.py`, `models.py`, `media.py`, `exporters.py`, `storage.py`, `diagnostics.py`입니다. Qwen 전용 작업자는 `tools/qwen_worker.py`에 있습니다.
+[실측 조건과 검증 기록 →](docs/GUIDE.md#실제-측정-결과)
 
-## 실제 측정 결과
+</details>
 
-개발 과정의 비교 기록에는 **약 29.8분 강의 한 편**을 세 모델로 전사한 결과가 있습니다.
+## 🛠️ 작은 화면 뒤의 구조
 
-| 모델 | GPU 전사 시간 | RTF | CLOVA 참고 텍스트와 CER | CLOVA 참고 텍스트와 WER |
-|---|---:|---:|---:|---:|
-| Large-v3 Turbo | 45.7초 | 0.025 | 6.2% | 14.0% |
-| Large-v3 | 185.7초 | 0.104 | 7.2% | 16.9% |
-| Qwen3-ASR-1.7B | 394.4초 | 0.221 | 5.8% | 15.2% |
+<p align="center">
+  <strong>PySide6 화면</strong> → <strong>별도 GPU 작업 프로세스</strong> → <strong>문서와 자막</strong>
+</p>
 
-측정 GPU는 RTX 5060 Ti입니다. Whisper는 FP16, Qwen은 BF16을 사용했습니다. RTF는 전사 시간 ÷ 음성 길이이며 작은 값일수록 빠릅니다. 모델 다운로드 시간은 포함하지 않습니다. Qwen은 모델 로딩 17.8초를 포함하면 총 412.2초였고, 60초 청크를 순차 처리했습니다.
+화면과 GPU 작업을 나누고, 모델은 작업 프로세스에서 재사용해요. 녹취 원본과 수정본을 따로 보관하고 중지한 작업의 부분 결과도 남겨요.
 
-**CLOVA 텍스트는 정답지가 아닙니다.** CER과 WER은 참고 텍스트와의 차이를 나타내며 음성 인식의 절대 정확도 점수가 아닙니다. 한국어 띄어쓰기와 화자 표기 차이도 WER에 영향을 줍니다. 한 강의의 결과로 다른 강의의 속도나 정확도를 보장하지 않습니다.
+<details>
+<summary><strong>🧩 기술 · 모델 · 저장 위치 자세히 보기</strong></summary>
 
-기존 검증 기록에는 한국어 합성 음성 약 47초의 WAV/MP4 GPU 전사, 자동 문서 저장, 편집·중지·재시도, 오류 후 다음 파일 처리, 패키징된 EXE의 오프라인 전사와 화면 렌더 검사가 포함되어 있습니다. 이 문서 정리 과정에서 GPU 전사를 새로 실행한 것은 아닙니다.
+| 구성 | 사용 기술 |
+| :--- | :--- |
+| 데스크톱 화면 | PySide6 / Qt |
+| Whisper 추론 | faster-whisper / CTranslate2 |
+| Qwen 추론 | Qwen-ASR / PyTorch |
+| 영상·음성 처리 | PyAV |
+| Word 내보내기 | python-docx |
+| Windows 배포 | PyInstaller |
 
-## 저장 위치와 개인정보
+모델은 **Turbo · Small · Medium · Large-v3 · Qwen3-ASR-1.7B**를 지원해요. 기본 데이터 저장 위치는 `%LOCALAPPDATA%\LectureScribe`예요.
 
-기본 저장 위치는 `%LOCALAPPDATA%\LectureScribe`입니다.
+[모델 안내 →](docs/GUIDE.md#지원-모델) · [제작 구조 →](docs/GUIDE.md#어떻게-만들었나요) · [저장 위치 →](docs/GUIDE.md#저장-위치와-개인정보)
 
-```text
-LectureScribe/
-├─ models/                 다운로드한 전사 모델
-├─ qwen-asr-env/            Qwen 전용 실행 환경
-├─ jobs/작업ID/
-│  ├─ transcript.json       원본·수정 발화와 작업 정보
-│  ├─ transcript.txt        자동 저장 텍스트
-│  ├─ transcript.docx       자동 저장 Word
-│  └─ error.log             오류 발생 시 작업 로그
-├─ logs/                   앱·작업 프로세스 로그
-├─ state.json              대기열과 설정
-└─ diagnostics.json        GPU 진단 결과
-```
+</details>
 
-모델을 내려받은 뒤 전사는 로컬 모델로 수행합니다. 모델 다운로드와 실행 환경 설치에는 인터넷이 필요합니다. 강의 파일을 전사 API로 전송하지 않고, 모델 Hub telemetry를 비활성화하도록 설정했습니다. 녹취·로그·상태 파일은 로컬에 남으므로 직접 관리할 수 있습니다.
+## 💬 궁금한 것들
 
-## 현재 한계와 후속 기능
+<details>
+<summary><strong>인터넷 없이 사용할 수 있나요?</strong></summary>
 
-- 오인식과 누락이 가능하므로 중요한 문장과 전문용어는 원음과 대조해야 합니다.
-- 다른 GPU·PC, 다양한 소음과 화자, 2시간 수준의 장시간 전사는 추가 검증이 필요합니다.
-- Small·Medium 및 INT8 혼합 정밀도의 실제 품질·속도는 별도 검증이 필요합니다.
-- 중단한 위치에서 이어하기는 미구현입니다. 재시도는 처음부터 진행합니다.
-- 앱 내부 영상 재생, 타임스탬프 클릭 재생, 오디오 트랙 선택은 후속 기능입니다. 현재 첫 번째 오디오 트랙을 사용합니다.
-- Qwen 청크 타임스탬프는 단어·문장 단위 정밀 자막을 위한 정렬 결과가 아닙니다.
+모델 다운로드와 실행 환경 설치에는 인터넷이 필요해요. 준비된 모델로 전사할 때는 내 PC에서 처리해요. 강의 파일을 전사 API에 보내지 않아요.
 
-## 버전별 제작 내용
+</details>
 
-| 버전 | 주요 변경 |
-|---|---|
-| 0.3.0 | Qwen3-ASR-1.7B 추가, 전용 실행 환경 연결, 기존 모델 캐시 재사용 |
-| 0.2.2 | 다운로드 바이트 집계 보완, Windows 콘솔의 UTF-8 결과 기록 개선 |
-| 0.2.1 | 모델 다운로드 콜백 호환성 수정 |
-| 0.2.0 | 앱 버전 표시, 모델 다운로드 진행 정보, 버전별 배포 파일 이름 |
-| 0.1.0 | 로컬 GPU 전사, 대기열, 녹취 편집, 자동 저장과 내보내기 |
+<details>
+<summary><strong>시간별 노트는 AI 요약인가요?</strong></summary>
 
-이 소개는 로컬 소스와 기존 README·변경 이력·검증 결과·강의 비교 기록을 확인해 작성했습니다. 소스나 실행 파일을 배포할 때는 Qt, NVIDIA 런타임, 모델과 각 의존성의 원본 라이선스 고지를 함께 확인해야 합니다.
+발화를 시간 구간으로 묶어 보여주는 기능이에요. 새로운 내용을 생성하거나 요약하지 않아요.
+
+</details>
+
+<details>
+<summary><strong>중간에 멈췄다가 이어갈 수 있나요?</strong></summary>
+
+저장된 부분 결과는 보존해요. 재시도는 새 작업으로 처음부터 진행하며, 중단 위치에서 이어하기는 아직 구현되지 않았어요.
+
+</details>
+
+<details>
+<summary><strong>사용 전에 알아둘 점이 있나요?</strong></summary>
+
+NVIDIA GPU가 필요하며 CPU 자동 전환은 제공하지 않아요. 다른 PC와 장시간 강의는 추가 검증이 필요해요. 앱 내부 영상 재생과 오디오 트랙 선택은 후속 기능이고, Qwen 시간 표시는 60초 청크 범위예요.
+
+[현재 한계와 후속 기능 →](docs/GUIDE.md#현재-한계와-후속-기능)
+
+</details>
+
+---
+
+<p align="center">
+  <strong>오늘의 강의가, 내일의 노트가 되도록 🌷</strong><br>
+  <sub>LectureScribe · v0.3.0 · 2026.10.14</sub><br>
+  <a href="docs/GUIDE.md">전체 프로그램 안내</a>
+</p>
