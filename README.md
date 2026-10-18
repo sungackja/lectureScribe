@@ -23,6 +23,12 @@
   <a href="docs/GUIDE.md">자세한 안내</a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe"><strong>⬇️ Windows 설치 파일 다운로드 · v0.3.0</strong></a>
+  &nbsp; · &nbsp;
+  <a href="https://github.com/sungackja/lectureScribe/releases/latest">변경 사항 보기</a>
+</p>
+
 ---
 
 ## 🌱 작은 도우미가 하는 일
@@ -60,11 +66,13 @@
 <details>
 <summary><strong>🧺 실행과 설치 안내 펼치기</strong></summary>
 
-배포 폴더의 `dist\LectureScribe\LectureScribe.exe` 또는 개발 폴더의 `run.bat`를 실행해요. EXE는 `_internal` 폴더와 함께 유지해주세요.
+<a href="https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe"><strong>Windows 10/11 x64 설치 파일 다운로드 →</strong></a>
+
+설치 파일을 실행하면 시작 메뉴에 LectureScribe가 추가돼요. 기본 설치 위치는 `%LOCALAPPDATA%\Programs\LectureScribe`이며, 설치 후 앱을 실행해 강의 파일을 등록하면 돼요. 앱과 GPU 라이브러리는 약 2.2GB의 디스크 공간을 사용하고, 전사 모델은 첫 사용 때 별도로 내려받아요.
 
 개발 환경은 Python 3.11 x64에서 `setup.bat`로 설치해요. Qwen은 Python 3.12 또는 uv를 준비하고 `setup_qwen.bat`로 별도 환경을 설치해요.
 
-현재 저장소는 프로그램 **소개 문서**를 담고 있어요. 실행 파일과 개발 소스는 아직 이 저장소에 게시되어 있지 않아요. 위 경로는 전체 프로그램 폴더가 있는 환경을 기준으로 해요.
+이 저장소는 프로그램 소개 문서와 설치 파일을 제공해요. 개발 소스와 빌드 방법은 자세한 안내를 참고해주세요.
 
 [설치 · 빌드 · GPU 진단 자세히 보기 →](docs/GUIDE.md#설치와-실행-환경)
 
@@ -158,6 +166,7 @@ NVIDIA GPU가 필요하며 CPU 자동 전환은 제공하지 않아요. 다른 P
 
 <p align="center">
   <strong>오늘의 강의가, 내일의 노트가 되도록 🌷</strong><br>
-  <sub>LectureScribe · v0.3.0 · 2026.10.14</sub><br>
+  <sub>LectureScribe · v0.3.0 · 2026.10.18</sub><br>
   <a href="docs/GUIDE.md">전체 프로그램 안내</a>
 </p>
+
