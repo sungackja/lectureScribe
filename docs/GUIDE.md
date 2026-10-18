@@ -2,9 +2,9 @@
 
 **강의 영상과 음성을 내 PC에서 녹취하고, 수정한 결과를 문서와 자막으로 저장하는 Windows 프로그램입니다.**
 
-현재 로컬 프로그램 버전: **0.3.0** · 문서 정리일: **2026-10-14**
+현재 로컬 프로그램 버전: **0.3.0** · 문서 정리일: **2026-10-18**
 
-이 저장소는 LectureScribe의 제작 내용과 사용 방법을 소개합니다. 아래 실행 경로와 명령은 프로그램 배포 폴더 또는 개발 소스를 받은 환경을 기준으로 합니다. 현재 이 저장소에는 소개 문서를 게시하며, 실행 파일·모델·강의 원본·녹취 원문은 포함하지 않습니다.
+이 저장소는 LectureScribe의 제작 내용과 사용 방법, Windows 설치 파일을 제공합니다. 모델·강의 원본·녹취 원문은 포함하지 않습니다.
 
 ## 어떤 프로그램인가요?
 
@@ -30,7 +30,7 @@ LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성�
 
 ## 사용하는 순서
 
-1. 배포 폴더의 `dist\LectureScribe\LectureScribe.exe` 또는 개발 폴더의 `run.bat`를 실행합니다.
+1. [Windows 설치 파일을 내려받아 실행](https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe)합니다. 개발 소스가 있는 경우 `run.bat`도 사용할 수 있습니다.
 2. 강의 영상이나 음성 파일을 추가합니다.
 3. 모델과 언어를 선택합니다. 기본 설정은 **Large-v3 Turbo / 한국어 / FP16**입니다.
 4. 모델이 없으면 예상 다운로드 용량과 저장 위치를 확인하고 다운로드에 동의합니다.
@@ -38,7 +38,7 @@ LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성�
 6. 문장을 두 번 클릭해 수정합니다. JSON에는 원본 `text`와 수정본 `edited_text`가 구분되어 저장됩니다.
 7. **내보내기**에서 원하는 문서 또는 자막 형식을 선택합니다.
 
-EXE 배포본은 `_internal` 폴더를 포함한 전체 폴더를 함께 유지해야 합니다. 모델은 배포 ZIP에 포함하지 않으며 사용자 캐시에 별도로 저장합니다.
+설치 프로그램은 앱 실행 파일과 필요한 라이브러리를 함께 설치합니다. 휴대용 ZIP을 사용하는 경우 `_internal` 폴더를 포함한 전체 폴더를 유지해야 합니다. 모델은 설치 파일에 포함하지 않으며 사용자 캐시에 별도로 저장합니다.
 
 ## 지원 모델
 
@@ -57,6 +57,10 @@ Whisper 계열에는 beam size, VAD, 전문용어 설정을 적용할 수 있습
 ## 설치와 실행 환경
 
 실제 검증 환경은 **Windows 11 Pro x64 / Intel Core i5-14400F / RAM 48GB / RTX 5060 Ti 8GB급**입니다. 이는 검증한 PC의 사양이며 최소 요구 사양을 의미하지 않습니다. NVIDIA GPU를 사용하며 CPU 자동 전환은 제공하지 않습니다.
+
+[Windows 10/11 x64 설치 파일 다운로드 →](https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe)
+
+기본 설치 경로는 `%LOCALAPPDATA%\Programs\LectureScribe`이며 앱과 GPU 라이브러리에 약 2.2GB의 공간이 필요합니다. Whisper 모델은 첫 전사 때 별도로 내려받습니다.
 
 개발 소스 또는 전체 배포 파일이 있는 경우 다음 스크립트를 사용합니다.
 
@@ -161,3 +165,4 @@ LectureScribe/
 | 0.1.0 | 로컬 GPU 전사, 대기열, 녹취 편집, 자동 저장과 내보내기 |
 
 이 소개는 로컬 소스와 기존 README·변경 이력·검증 결과·강의 비교 기록을 확인해 작성했습니다. 소스나 실행 파일을 배포할 때는 Qt, NVIDIA 런타임, 모델과 각 의존성의 원본 라이선스 고지를 함께 확인해야 합니다.
+
