@@ -2,13 +2,13 @@
 
 **강의 영상과 음성을 내 PC에서 녹취하고, 수정한 결과를 문서와 자막으로 저장하는 Windows 프로그램입니다.**
 
-현재 로컬 프로그램 버전: **0.3.0** · 문서 정리일: **2026-10-18**
+현재 로컬 프로그램 버전: **0.4.0** · 문서 정리일: **2026-10-19**
 
 이 저장소는 LectureScribe의 제작 내용과 사용 방법, Windows 설치 파일을 제공합니다. 모델·강의 원본·녹취 원문은 포함하지 않습니다.
 
 ## 어떤 프로그램인가요?
 
-LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성을 텍스트로 바꾸는 데스크톱 앱입니다. 외부 음성 인식 API에 강의를 업로드하지 않고, 사용자의 컴퓨터에서 추론합니다. 녹취를 확인하고 수정한 뒤 공부나 기록에 사용할 수 있습니다.
+LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU, Intel 내장 GPU 또는 CPU로 음성을 텍스트로 바꾸는 데스크톱 앱입니다. 외부 음성 인식 API에 강의를 업로드하지 않고, 사용자의 컴퓨터에서 추론합니다. 녹취를 확인하고 수정한 뒤 공부나 기록에 사용할 수 있습니다.
 
 ### 주요 기능
 
@@ -16,7 +16,8 @@ LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성�
 |---|---|
 | 영상·음성 등록 | MP4, MP3, WAV, M4A, MKV 파일 추가 및 끌어놓기 |
 | 여러 파일 처리 | 대기열에 등록하고 순차 전사 |
-| GPU 전사 | Whisper 계열 4종과 Qwen3-ASR-1.7B 지원 |
+| 장치 선택 | NVIDIA GPU, Intel GPU, CPU 자동 선택 및 수동 지정 |
+| 전사 엔진 | Whisper 계열 4종은 CUDA, OpenVINO 또는 CPU INT8로 실행; Qwen3-ASR-1.7B는 NVIDIA CUDA 사용 |
 | 언어 선택 | 한국어, 영어, 일본어, 자동 감지 |
 | 진행 상태 | 처리 위치, 경과 시간, 속도와 예상 남은 시간 표시 |
 | 녹취 편집 | 문장 검색, 더블클릭 수정, 원본과 수정본 비교 |
@@ -24,13 +25,13 @@ LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성�
 | 추가 내보내기 | TXT, DOCX, SRT, VTT, JSON 지원 |
 | 출력 구성 | 전체 텍스트, 타임스탬프 포함, 시간별 노트 |
 | 작업 복구 | 재시작 시 대기열 복원, 중지된 작업의 부분 결과 보존 |
-| 진단 | GPU 준비 상태와 작업별 오류 로그 확인 |
+| 진단 | CPU, NVIDIA CUDA, Intel OpenVINO GPU 준비 상태와 작업별 오류 로그 확인 |
 
 시간별 노트는 발화를 시간 구간으로 묶는 기능입니다. 내용을 생성하거나 요약하지 않습니다.
 
 ## 사용하는 순서
 
-1. [Windows 설치 파일을 내려받아 실행](https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe)합니다. 개발 소스가 있는 경우 `run.bat`도 사용할 수 있습니다.
+1. [Windows 휴대용 ZIP을 내려받아 압축 해제](https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-v0.4.0-Windows.zip)한 뒤 `LectureScribe\LectureScribe.exe`를 실행합니다. 개발 소스가 있는 경우 `run.bat`도 사용할 수 있습니다.
 2. 강의 영상이나 음성 파일을 추가합니다.
 3. 모델과 언어를 선택합니다. 기본 설정은 **Large-v3 Turbo / 한국어 / FP16**입니다.
 4. 모델이 없으면 예상 다운로드 용량과 저장 위치를 확인하고 다운로드에 동의합니다.
@@ -38,7 +39,7 @@ LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성�
 6. 문장을 두 번 클릭해 수정합니다. JSON에는 원본 `text`와 수정본 `edited_text`가 구분되어 저장됩니다.
 7. **내보내기**에서 원하는 문서 또는 자막 형식을 선택합니다.
 
-설치 프로그램은 앱 실행 파일과 필요한 라이브러리를 함께 설치합니다. 휴대용 ZIP을 사용하는 경우 `_internal` 폴더를 포함한 전체 폴더를 유지해야 합니다. 모델은 설치 파일에 포함하지 않으며 사용자 캐시에 별도로 저장합니다.
+휴대용 ZIP에는 앱 실행 파일과 필요한 라이브러리가 포함됩니다. `_internal` 폴더를 포함한 전체 폴더를 유지해야 합니다. 전사 모델은 배포 파일에 포함하지 않으며 사용자 캐시에 별도로 저장합니다.
 
 ## 지원 모델
 
@@ -52,15 +53,17 @@ LectureScribe는 강의 파일을 여러 개 등록하고 NVIDIA GPU로 음성�
 
 용량은 프로그램에 표시하는 추정값이며 실행 환경과 설치 패키지 용량은 별도입니다.
 
+Whisper 모델은 NVIDIA GPU에서 CTranslate2/CUDA, CPU에서 CTranslate2 INT8, Intel GPU에서 별도의 OpenVINO FP16 변환 모델을 사용합니다. CPU와 Intel GPU용 모델 파일은 NVIDIA용 파일과 별도 캐시에 저장됩니다. 장치 기본값은 **자동**이며 NVIDIA GPU → Intel GPU → CPU 순서로 준비된 장치를 선택합니다. 연산 장치 메뉴에서 이를 직접 바꿀 수 있습니다.
+
 Whisper 계열에는 beam size, VAD, 전문용어 설정을 적용할 수 있습니다. 기본 beam size는 5입니다. Qwen은 별도 실행 환경을 사용하고 음성을 60초씩 나누어 처리합니다. Qwen의 타임스탬프는 청크 범위이며, Whisper 설정인 beam size·VAD·전문용어는 Qwen에 적용되지 않습니다.
 
 ## 설치와 실행 환경
 
-실제 검증 환경은 **Windows 11 Pro x64 / Intel Core i5-14400F / RAM 48GB / RTX 5060 Ti 8GB급**입니다. 이는 검증한 PC의 사양이며 최소 요구 사양을 의미하지 않습니다. NVIDIA GPU를 사용하며 CPU 자동 전환은 제공하지 않습니다.
+실제 검증 환경은 **Windows 11 Pro x64 / Intel Core i5-14400F / RAM 48GB / RTX 5060 Ti 8GB급**입니다. 이는 검증한 PC의 사양이며 최소 요구 사양을 의미하지 않습니다. Intel Core i5-14400F에는 내장 GPU가 없어 Intel GPU 추론은 이 PC에서 실기기로 시험하지 못했습니다. Intel GPU를 사용할 때는 호환되는 Intel 그래픽 드라이버가 필요합니다.
 
-[Windows 10/11 x64 설치 파일 다운로드 →](https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe)
+[Windows 10/11 x64 휴대용 ZIP 다운로드 →](https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-v0.4.0-Windows.zip)
 
-기본 설치 경로는 `%LOCALAPPDATA%\Programs\LectureScribe`이며 앱과 GPU 라이브러리에 약 2.2GB의 공간이 필요합니다. Whisper 모델은 첫 전사 때 별도로 내려받습니다.
+ZIP을 압축 해제한 뒤 폴더 안의 실행 파일을 실행합니다. Whisper 모델은 첫 전사 때 별도로 내려받습니다. CPU 사용은 별도 CUDA 설치가 필요하지 않으며, Intel GPU에는 OpenVINO GPU 플러그인이 인식하는 Intel 그래픽 장치와 드라이버가 필요합니다.
 
 개발 소스 또는 전체 배포 파일이 있는 경우 다음 스크립트를 사용합니다.
 
@@ -99,13 +102,14 @@ TXT · DOCX · JSON 자동 저장
 | 구성 | 역할 |
 |---|---|
 | PySide6 / Qt | 데스크톱 화면, 파일 등록, 대기열, 녹취 편집 |
-| faster-whisper / CTranslate2 | Whisper 모델의 CUDA 추론 |
+| faster-whisper / CTranslate2 | Whisper 모델의 CUDA 또는 CPU INT8 추론 |
+| OpenVINO GenAI | Intel GPU의 Whisper FP16 추론 |
 | Qwen-ASR / PyTorch | Qwen 모델의 CUDA/BF16 추론 |
 | PyAV | 영상·음성 파일의 미디어 정보와 오디오 처리 |
 | python-docx | Word 문서 생성 |
 | PyInstaller | Windows 폴더형 실행 파일 배포 |
 
-화면과 GPU 작업을 별도 프로세스로 분리해 GPU 오류가 화면까지 종료시키는 것을 줄였습니다. 같은 작업 프로세스에서 모델을 재사용하며, JSON은 임시 파일에 작성한 뒤 교체합니다. 중지 시 저장된 부분 결과를 보존하고, 재시도는 파일 처음부터 새 작업으로 처리합니다.
+화면과 전사 작업을 별도 프로세스로 분리해 장치 추론 오류가 화면까지 종료시키는 것을 줄였습니다. 같은 작업 프로세스에서 모델을 재사용하며, JSON은 임시 파일에 작성한 뒤 교체합니다. 중지 시 저장된 부분 결과를 보존하고, 재시도는 파일 처음부터 새 작업으로 처리합니다.
 
 주요 개발 파일은 `main.py`, `lecturescribe/gui.py`, `worker.py`, `models.py`, `media.py`, `exporters.py`, `storage.py`, `diagnostics.py`입니다. Qwen 전용 작업자는 `tools/qwen_worker.py`에 있습니다.
 
@@ -122,6 +126,8 @@ TXT · DOCX · JSON 자동 저장
 측정 GPU는 RTX 5060 Ti입니다. Whisper는 FP16, Qwen은 BF16을 사용했습니다. RTF는 전사 시간 ÷ 음성 길이이며 작은 값일수록 빠릅니다. 모델 다운로드 시간은 포함하지 않습니다. Qwen은 모델 로딩 17.8초를 포함하면 총 412.2초였고, 60초 청크를 순차 처리했습니다.
 
 **CLOVA 텍스트는 정답지가 아닙니다.** CER과 WER은 참고 텍스트와의 차이를 나타내며 음성 인식의 절대 정확도 점수가 아닙니다. 한국어 띄어쓰기와 화자 표기 차이도 WER에 영향을 줍니다. 한 강의의 결과로 다른 강의의 속도나 정확도를 보장하지 않습니다.
+
+CPU 성능은 Intel Core i5-14400F에서 Large-v3 Turbo INT8로 한국어 음성 47.1초를 처리했을 때 추론 14.4초(RTF 0.306)였습니다. CPU로도 실시간보다 빠르게 끝났지만, 이 수치는 짧은 테스트 음성 결과라 다른 프로세서나 긴 강의의 속도를 보장하지 않습니다.
 
 기존 검증 기록에는 한국어 합성 음성 약 47초의 WAV/MP4 GPU 전사, 자동 문서 저장, 편집·중지·재시도, 오류 후 다음 파일 처리, 패키징된 EXE의 오프라인 전사와 화면 렌더 검사가 포함되어 있습니다. 이 문서 정리 과정에서 GPU 전사를 새로 실행한 것은 아닙니다.
 
@@ -158,6 +164,7 @@ LectureScribe/
 
 | 버전 | 주요 변경 |
 |---|---|
+| 0.4.0 | NVIDIA·Intel GPU·CPU 자동 선택 및 수동 지정, CPU INT8 Whisper, Intel GPU OpenVINO Whisper |
 | 0.3.0 | Qwen3-ASR-1.7B 추가, 전용 실행 환경 연결, 기존 모델 캐시 재사용 |
 | 0.2.2 | 다운로드 바이트 집계 보완, Windows 콘솔의 UTF-8 결과 기록 개선 |
 | 0.2.1 | 모델 다운로드 콜백 호환성 수정 |
@@ -165,4 +172,5 @@ LectureScribe/
 | 0.1.0 | 로컬 GPU 전사, 대기열, 녹취 편집, 자동 저장과 내보내기 |
 
 이 소개는 로컬 소스와 기존 README·변경 이력·검증 결과·강의 비교 기록을 확인해 작성했습니다. 소스나 실행 파일을 배포할 때는 Qt, NVIDIA 런타임, 모델과 각 의존성의 원본 라이선스 고지를 함께 확인해야 합니다.
+
 
