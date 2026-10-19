@@ -12,8 +12,8 @@
 <p align="center">
   <strong>🪟 Windows</strong> &nbsp; · &nbsp;
   <strong>🌿 로컬 전사</strong> &nbsp; · &nbsp;
-  <strong>⚡ NVIDIA GPU</strong> &nbsp; · &nbsp;
-  <strong>📦 v0.3.0</strong>
+  <strong>⚡ NVIDIA · Intel GPU · CPU</strong> &nbsp; · &nbsp;
+  <strong>📦 v0.4.0</strong>
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe"><strong>⬇️ Windows 설치 파일 다운로드 · v0.3.0</strong></a>
+  <a href="https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-v0.4.0-Windows.zip"><strong>⬇️ Windows 프로그램 다운로드 · v0.4.0</strong></a>
   &nbsp; · &nbsp;
   <a href="https://github.com/sungackja/lectureScribe/releases/latest">변경 사항 보기</a>
 </p>
@@ -41,7 +41,7 @@
 </td>
 <td width="33%" valign="top">
 <h3>🎧 내 PC에서 녹취</h3>
-<p>Whisper와 Qwen 모델이 NVIDIA GPU로 음성을 글로 바꿔요. 강의를 전사 API에 보내지 않아요.</p>
+<p>Whisper는 NVIDIA GPU, Intel 내장 GPU 또는 CPU로 실행해요. Qwen은 NVIDIA GPU를 사용해요. 강의를 전사 API에 보내지 않아요.</p>
 </td>
 <td width="33%" valign="top">
 <h3>📝 나만의 기록으로</h3>
@@ -66,9 +66,9 @@
 <details>
 <summary><strong>🧺 실행과 설치 안내 펼치기</strong></summary>
 
-<a href="https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-Setup.exe"><strong>Windows 10/11 x64 설치 파일 다운로드 →</strong></a>
+<a href="https://github.com/sungackja/lectureScribe/releases/latest/download/LectureScribe-v0.4.0-Windows.zip"><strong>Windows 10/11 x64 휴대용 프로그램 다운로드 →</strong></a>
 
-설치 파일을 실행하면 시작 메뉴에 LectureScribe가 추가돼요. 기본 설치 위치는 `%LOCALAPPDATA%\Programs\LectureScribe`이며, 설치 후 앱을 실행해 강의 파일을 등록하면 돼요. 앱과 GPU 라이브러리는 약 2.2GB의 디스크 공간을 사용하고, 전사 모델은 첫 사용 때 별도로 내려받아요.
+ZIP 파일을 압축 해제한 뒤 `LectureScribe\LectureScribe.exe`를 실행해요. 실행 파일만 따로 옮기지 말고 `_internal` 폴더를 포함한 전체 `LectureScribe` 폴더를 유지해주세요. 전사 모델은 첫 사용 때 별도로 내려받아요.
 
 개발 환경은 Python 3.11 x64에서 `setup.bat`로 설치해요. Qwen은 Python 3.12 또는 uv를 준비하고 `setup_qwen.bat`로 별도 환경을 설치해요.
 
@@ -156,7 +156,7 @@ CLOVA 텍스트는 정답지가 아니며, 이 값은 텍스트 간 차이예요
 <details>
 <summary><strong>사용 전에 알아둘 점이 있나요?</strong></summary>
 
-NVIDIA GPU가 필요하며 CPU 자동 전환은 제공하지 않아요. 다른 PC와 장시간 강의는 추가 검증이 필요해요. 앱 내부 영상 재생과 오디오 트랙 선택은 후속 기능이고, Qwen 시간 표시는 60초 청크 범위예요.
+장치 자동 선택은 NVIDIA GPU, Intel GPU, CPU 순서예요. CPU와 Intel GPU는 Whisper 모델에서 사용할 수 있고, Qwen은 NVIDIA GPU 전용이에요. Intel GPU는 호환 드라이버가 필요하며 실제 Intel GPU 장치 검증은 아직 제한적이에요. 앱 내부 영상 재생과 오디오 트랙 선택은 후속 기능이고, Qwen 시간 표시는 60초 청크 범위예요.
 
 [현재 한계와 후속 기능 →](docs/GUIDE.md#현재-한계와-후속-기능)
 
@@ -166,7 +166,8 @@ NVIDIA GPU가 필요하며 CPU 자동 전환은 제공하지 않아요. 다른 P
 
 <p align="center">
   <strong>오늘의 강의가, 내일의 노트가 되도록 🌷</strong><br>
-  <sub>LectureScribe · v0.3.0 · 2026.10.18</sub><br>
+  <sub>LectureScribe · v0.4.0 · 2026.10.19</sub><br>
   <a href="docs/GUIDE.md">전체 프로그램 안내</a>
 </p>
+
 
